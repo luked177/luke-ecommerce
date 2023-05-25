@@ -1,11 +1,15 @@
-import ItemCard from "@/components/ItemCard";
+import ItemCard from "@/components/shared/ItemCard";
+import { db } from "@vercel/postgres";
 import React from "react";
 
 export default async function Page({ params }) {
-	const items = await fetch(`https://fakestoreapi.com/products/category/${params.categoryName}`).then((res) => res.json());
+	const client = await db.connect();
+	const decodedCategory = decodeURIComponent(params.categoryName.replace("%20", " "));
+	const products = await client.sql`SELECT * FROM products WHERE category = ${decodedCategory} ;`;
+
 	return (
 		<main className='flex flex-wrap items-center justify-between p-4 gap-5'>
-			{items.map((item) => (
+			{products.rows.map((item) => (
 				<ItemCard key={item.id} item={item} />
 			))}
 		</main>

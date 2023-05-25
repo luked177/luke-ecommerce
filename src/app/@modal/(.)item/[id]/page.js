@@ -1,16 +1,13 @@
-import { Dialog, DialogContent } from "@/components/Dialog";
-import ItemCard from "@/components/ItemCard";
+import { db } from "@vercel/postgres";
 import React from "react";
+import Modal from "./modal";
 
 export default async function Page({ params }) {
-	const data = await fetch(`https://fakestoreapi.com/products/${params.id}`).then((res) => res.json());
+	const client = await db.connect();
+	const product = await client.sql`SELECT * FROM products WHERE id = ${params.id}`;
 	return (
 		<div>
-			<Dialog defaultOpen>
-				<DialogContent>
-					<ItemCard item={data} />
-				</DialogContent>
-			</Dialog>
+			<Modal item={product.rows[0]} />
 		</div>
 	);
 }

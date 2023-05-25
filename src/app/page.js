@@ -1,14 +1,19 @@
-import ItemCard from "@/components/ItemCard";
+import ItemCard from "@/components/shared/ItemCard";
 import React from "react";
+import SortSelect from "@/components/page-components/SortSelect";
+import { sortProducts } from "@/db/SortProducts";
 
-export default async function Home() {
-	const test = await fetch("https://fakestoreapi.com/products").then((res) => res.json());
+export default async function Home({ searchParams }) {
+	const products = await sortProducts(searchParams?.sort);
 
 	return (
-		<main className='flex flex-wrap items-center justify-between p-4 gap-5'>
-			{test.map((item) => (
-				<ItemCard key={item.id} item={item} />
-			))}
+		<main className='p-4 flex flex-col gap-4'>
+			<SortSelect />
+			<div className='flex flex-wrap items-center justify-between gap-5'>
+				{products.rows.map((item) => (
+					<ItemCard key={item.id} item={item} />
+				))}
+			</div>
 		</main>
 	);
 }

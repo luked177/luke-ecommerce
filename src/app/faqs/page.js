@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/Accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/primitives/Accordion";
 
 export default async function FAQS() {
 	return (

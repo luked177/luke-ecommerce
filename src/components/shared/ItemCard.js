@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./Card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../primitives/Card";
 import Image from "next/image";
 import { getStarRating } from "@/utils/starRating";
 import Link from "next/link";
@@ -15,13 +15,13 @@ export default function ItemCard({ item }) {
 						</div>
 					</CardHeader>
 					<CardContent>
-						<CardTitle className='h-[36px]'>{item.title}</CardTitle>
+						<CardTitle className='h-[36px] line-clamp-2'>{item.title}</CardTitle>
 						<CardDescription className='h-[80px] line-clamp-4'>{item.description}</CardDescription>
 					</CardContent>
 					<CardFooter className='flex justify-between'>
 						<div>
 							<p className='flex'>
-								{getStarRating(item.rating.rate)}({item.rating.count})
+								{getStarRating(Number(item.rating))}({item.ratingcount})
 							</p>
 						</div>
 						<p>{`£${item.price}`}</p>

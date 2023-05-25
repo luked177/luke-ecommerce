@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "./NavigationMenu";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../primitives/NavigationMenu";
 import Link from "next/link";
 
 export default function NavBar({ categories }) {
