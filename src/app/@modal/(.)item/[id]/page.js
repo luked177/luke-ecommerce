@@ -15,7 +15,7 @@ export default async function Page({ params }) {
 			<div className='flex'>
 				<div className='w-1/2'>
 					<div style={{ width: "180px", height: "180px", position: "relative" }}>
-						<Image key={item.id} className='' src={item.image} alt='Next.js Logo' fill />
+						<Image key={item.id} sizes='100%' className='' src={item.image} alt='Next.js Logo' fill />
 					</div>
 					<div className='flex gap-2'>
 						<p className='flex'>

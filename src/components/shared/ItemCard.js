@@ -11,7 +11,7 @@ export default function ItemCard({ item }) {
 				<Card className='w-[400px] h-[400px]'>
 					<CardHeader className='flex items-center'>
 						<div style={{ width: "180px", height: "180px", position: "relative" }}>
-							<Image key={item.id} className='' src={item.image} alt='Next.js Logo' fill />
+							<Image key={item.id} className='' sizes='100%' src={item.image} alt='Next.js Logo' fill />
 						</div>
 					</CardHeader>
 					<CardContent>

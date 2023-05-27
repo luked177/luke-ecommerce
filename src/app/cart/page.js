@@ -33,7 +33,7 @@ export default async function Page() {
 					<>
 						<Card className='p-4 flex gap-4'>
 							<div style={{ width: "90px", height: "90px", position: "relative" }}>
-								<Image key={item.id} className='' src={item.image} alt='Next.js Logo' fill />
+								<Image key={item.id} sizes="100%" className='' src={item.image} alt='Next.js Logo' fill />
 							</div>
 							<div className='w-full flex flex-col justify-between'>
 								<CardTitle className='flex justify-between items-center w-full'>
