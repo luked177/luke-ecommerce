@@ -12,8 +12,8 @@ export const metadata = {
 
 export default function RootLayout(props) {
 	return (
-		<html lang='en'>
-			<body className={inter.className}>
+		<html className='h-screen overflow-y-scroll' lang='en'>
+			<body className={`${inter.className} h-screen`}>
 				<Header />
 				{props.modal}
 				<Suspense fallback={<p>Loading...</p>}>{props.children}</Suspense>

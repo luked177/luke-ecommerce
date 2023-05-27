@@ -1,10 +1,9 @@
 "use client";
 import { Dialog, DialogContent } from "@/components/primitives/Dialog";
-import ItemCard from "@/components/shared/ItemCard";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 
-export default function Modal({ item }) {
+export default function Modal({ children }) {
 	const router = useRouter();
 
 	const onDismiss = useCallback(() => {
@@ -13,9 +12,7 @@ export default function Modal({ item }) {
 
 	return (
 		<Dialog defaultOpen onOpenChange={() => onDismiss()}>
-			<DialogContent>
-				<ItemCard item={item} />
-			</DialogContent>
+			<DialogContent>{children}</DialogContent>
 		</Dialog>
 	);
 }
