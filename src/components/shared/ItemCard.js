@@ -4,7 +4,8 @@ import Image from "next/image";
 import { getStarRating } from "@/utils/starRating";
 import Link from "next/link";
 
-export default function ItemCard({ item }) {
+export default async function ItemCard({ item, reviews }) {
+	const averageRating = reviews.reduce((sum, product) => sum + parseFloat(product.rating), 0) / reviews.length;
 	return (
 		<div key={item.id}>
 			<Link href={`/item/${item.id}`}>
@@ -20,9 +21,13 @@ export default function ItemCard({ item }) {
 					</CardContent>
 					<CardFooter className='flex justify-between'>
 						<div>
-							<p className='flex'>
-								{getStarRating(Number(item.rating))}({item.ratingcount})
-							</p>
+							{!isNaN(averageRating) ? (
+								<p className='flex'>
+									{getStarRating(averageRating.toFixed(2))}({reviews.length})
+								</p>
+							) : (
+								<p>No reviews yet!</p>
+							)}
 						</div>
 						<p>{`£${item.price}`}</p>
 					</CardFooter>

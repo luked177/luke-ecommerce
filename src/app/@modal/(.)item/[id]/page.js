@@ -9,6 +9,8 @@ export default async function Page({ params }) {
 	const client = await db.connect();
 	const product = await client.sql`SELECT * FROM products WHERE id = ${params.id}`;
 	const item = product.rows[0];
+	const { rows: reviews } = await client.sql`SELECT * FROM reviews WHERE product_id = ${params.id}`;
+	const averageRating = reviews.reduce((sum, product) => sum + parseFloat(product.rating), 0) / reviews.length;
 	return (
 		<Modal>
 			<h1>{item.title}</h1>
@@ -18,9 +20,13 @@ export default async function Page({ params }) {
 						<Image key={item.id} sizes='100%' className='' src={item.image} alt='Next.js Logo' fill />
 					</div>
 					<div className='flex gap-2'>
-						<p className='flex'>
-							{getStarRating(Number(item.rating))}({item.ratingcount})
-						</p>
+						{!isNaN(averageRating) ? (
+							<p className='flex'>
+								{getStarRating(averageRating.toFixed(2))}({reviews.length})
+							</p>
+						) : (
+							<p>No reviews yet!</p>
+						)}
 						<p>{`£${item.price}`}</p>
 					</div>
 				</div>

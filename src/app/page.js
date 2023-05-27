@@ -11,6 +11,7 @@ export default async function Home({ searchParams }) {
 	const query = "SELECT * FROM products WHERE title LIKE $1 OR description LIKE $1" + getOrderingSQL(searchParams?.sort);
 	const values = [`%${searchParams?.search}%`];
 	const { rows: searchResults } = await client.query(query, values);
+	const { rows: reviews } = await client.sql`SELECT * FROM reviews`;
 
 	return (
 		<main className='p-4 flex flex-col gap-4'>
@@ -20,7 +21,9 @@ export default async function Home({ searchParams }) {
 			</div>
 
 			<div className='flex flex-wrap items-center justify-between gap-5'>
-				{searchParams?.search ? searchResults.map((item) => <ItemCard key={item.id} item={item} />) : products.rows.map((item) => <ItemCard key={item.id} item={item} />)}
+				{searchParams?.search
+					? searchResults.map((item) => <ItemCard reviews={reviews.filter((r) => Number(item.id) === r.product_id)} key={item.id} item={item} />)
+					: products.rows.map((item) => <ItemCard reviews={reviews.filter((r) => Number(item.id) === r.product_id)} key={item.id} item={item} />)}
 			</div>
 		</main>
 	);
