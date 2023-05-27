@@ -5,6 +5,7 @@ import { db } from "@vercel/postgres";
 import Link from "next/link";
 import { kv } from "@vercel/kv";
 import { Badge } from "../primitives/Badge";
+import Search from "./Search";
 
 export default async function Header() {
 	const client = await db.connect();
@@ -15,11 +16,15 @@ export default async function Header() {
 
 	return (
 		<div className='flex justify-between items-center px-4 py-2'>
-			<Link href={"/"}>
-				<p>Luke.com</p>
-			</Link>
+			<div className='flex items-center'>
+				<Link href={"/"}>
+					<p>Luke.com</p>
+				</Link>
+			</div>
+
 			<NavBar categories={categories} />
-			<div className='flex items-center gap-2'>
+			<div className='flex items-center gap-2 justify-end'>
+				<Search />
 				<Link href={"/cart"}>
 					<div className='relative'>
 						<ShoppingCart />
