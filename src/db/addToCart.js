@@ -4,9 +4,10 @@ import { revalidatePath } from "next/cache";
 
 export async function addToCart(item) {
 	const cart = await kv.get("cart");
+	const itemWithGuid = { ...item, cartId: crypto.randomUUID() };
 	try {
 		if (cart !== null) {
-			const data = [...cart, item];
+			const data = [...cart, itemWithGuid];
 			await kv.set("cart", data);
 			revalidatePath("/");
 			revalidatePath("/cart");
@@ -14,7 +15,7 @@ export async function addToCart(item) {
 			return;
 		}
 
-		await kv.set("cart", [item]);
+		await kv.set("cart", [itemWithGuid]);
 	} catch (e) {
 		console.log(e);
 	}

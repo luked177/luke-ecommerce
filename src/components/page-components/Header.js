@@ -15,7 +15,9 @@ export default async function Header() {
 
 	return (
 		<div className='flex justify-between items-center px-4 py-2'>
-			<p>Luke.com</p>
+			<Link href={"/"}>
+				<p>Luke.com</p>
+			</Link>
 			<NavBar categories={categories} />
 			<div className='flex items-center gap-2'>
 				<Link href={"/cart"}>
