@@ -2,12 +2,12 @@
 import { kv } from "@vercel/kv";
 import { revalidatePath } from "next/cache";
 
-export async function deleteFromCart(item) {
-	const cart = await kv.get("cart");
+export async function deleteFromCart(item, userId) {
+	const cart = await kv.get(`${userId}_cart`);
 	try {
 		if (cart !== null) {
 			const data = cart.filter((product) => product.cartId !== item.cartId);
-			await kv.set("cart", data);
+			await kv.set(`${userId}_cart`, data);
 			revalidatePath("/cart");
 			return;
 		}

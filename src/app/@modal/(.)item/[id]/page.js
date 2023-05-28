@@ -4,9 +4,11 @@ import Modal from "./modal";
 import Image from "next/image";
 import { getStarRating } from "@/utils/starRating";
 import CartOptions from "@/components/shared/CartOptions";
+import { auth } from "@clerk/nextjs";
 
 export default async function Page({ params }) {
 	const client = await db.connect();
+	const user = await auth();
 	const product = await client.sql`SELECT * FROM products WHERE id = ${params.id}`;
 	const item = product.rows[0];
 	const { rows: reviews } = await client.sql`SELECT * FROM reviews WHERE product_id = ${params.id}`;
@@ -31,7 +33,7 @@ export default async function Page({ params }) {
 					</div>
 				</div>
 				<div className='w-1/2'>
-					<CartOptions item={item} />
+					<CartOptions userId={user?.userId} item={item} />
 				</div>
 			</div>
 		</Modal>

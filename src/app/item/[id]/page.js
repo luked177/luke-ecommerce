@@ -7,9 +7,11 @@ import Image from "next/image";
 import React from "react";
 import AddReviewInput from "../../../components/shared/addReviewInput";
 import { Keyboard } from "lucide-react";
+import { currentUser } from "@clerk/nextjs";
 
 export default async function Page({ params }) {
 	const client = await db.connect();
+	const user = await currentUser();
 	const products = await client.sql`SELECT * FROM products WHERE id = ${params.id}`;
 	const item = products.rows[0];
 	const { rows: reviews, rowCount: reviewsLength } = await client.sql`SELECT * FROM reviews WHERE product_id = ${params.id} ORDER BY review_date DESC`;
@@ -24,10 +26,10 @@ export default async function Page({ params }) {
 						<Image key={item.id} sizes='100%' className='' src={item.image} alt='Next.js Logo' fill />
 					</div>
 				</div>
-				<CartOptions item={item} />
+				<CartOptions userId={user?.userId} item={item} />
 			</div>
 			<div className='flex flex-col gap-2 mt-4'>
-				<AddReviewInput item={item} />
+				<AddReviewInput userName={user?.username} item={item} />
 				{reviewsLength > 0 ? (
 					reviews.map((review, i) => (
 						<Card key={i} className='p-4'>

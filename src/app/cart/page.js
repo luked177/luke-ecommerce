@@ -1,6 +1,7 @@
 import { Button } from "@/components/primitives/Button";
 import { Card, CardTitle } from "@/components/primitives/Card";
 import DeleteItemButton from "@/components/shared/DeleteItemButton";
+import { auth } from "@clerk/nextjs";
 import { kv } from "@vercel/kv";
 import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
@@ -8,7 +9,8 @@ import Link from "next/link";
 import React from "react";
 
 export default async function Page() {
-	const cart = await kv.get("cart");
+	const user = await auth();
+	const cart = await kv.get(`${user?.userId}_cart`);
 	const totalPrice = cart.reduce((sum, product) => sum + parseFloat(product.price), 0);
 
 	const EmptyCartMessage = () => {
@@ -33,11 +35,11 @@ export default async function Page() {
 					<>
 						<Card className='p-4 flex gap-4'>
 							<div style={{ width: "90px", height: "90px", position: "relative" }}>
-								<Image key={item.id} sizes="100%" className='' src={item.image} alt='Next.js Logo' fill />
+								<Image key={item.id} sizes='100%' className='' src={item.image} alt='Next.js Logo' fill />
 							</div>
 							<div className='w-full flex flex-col justify-between'>
 								<CardTitle className='flex justify-between items-center w-full'>
-									{item.title} <DeleteItemButton item={item} />{" "}
+									{item.title} <DeleteItemButton userId={user?.userId} item={item} />
 								</CardTitle>
 								<div className='flex gap-4'>
 									<p>Size:{item.size}</p>

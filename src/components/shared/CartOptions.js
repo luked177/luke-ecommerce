@@ -6,7 +6,7 @@ import { Button } from "../primitives/Button";
 import { ShoppingBag } from "lucide-react";
 import { addToCart } from "@/db/addToCart";
 
-export default function CartOptions({ item }) {
+export default function CartOptions({ item, userId }) {
 	const [itemOptions, setItemOptions] = useState({ ...item });
 	return (
 		<div className='flex flex-col gap-4 justify-center'>
@@ -34,7 +34,7 @@ export default function CartOptions({ item }) {
 					<SelectItem value={"Red"}>Red</SelectItem>
 				</SelectContent>
 			</Select>
-			<Button onClick={() => addToCart(itemOptions)}>
+			<Button onClick={() => addToCart(itemOptions, userId)}>
 				<ShoppingBag /> Add to Cart
 			</Button>
 		</div>
